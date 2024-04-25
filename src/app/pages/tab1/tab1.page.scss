@@ -1,0 +1,32 @@
+.add-outcome {
+  position: absolute;
+  left: 50%;
+  bottom: 0.1em;
+  transform: translateX(-50%);
+  z-index: 10;
+}
+
+.fab-toolbar {
+  position: relative;
+  width: 100%;
+}
+
+.total-card {
+  padding-bottom: 2.5em;
+}
+
+.half-modal {
+  .modal-wrapper {
+    position: absolute;
+    bottom: 0;
+    min-height: initial;
+    top: initial;
+    height: 50%;
+  }
+}
+
+ion-list,
+ion-item {
+  background: none;
+  --background: none;
+}

@@ -1,0 +1,97 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title> Gastos </ion-title>
+    <ion-buttons slot="end">
+      <ion-button>
+        <ion-icon name="add"></ion-icon>
+        Tipo de gasto
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Gastos de {{currentMonth}}</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-card class="total-card">
+    <ion-card-header>
+      <ion-card-title class="ion-text-center">
+        {{total | money}}
+      </ion-card-title>
+      <ion-card-subtitle class="ion-text-center">
+        Gastados en {{outcomes.length}} articulos
+      </ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-loading></ion-loading>
+      <canvas #chartContext></canvas>
+    </ion-card-content>
+  </ion-card>
+  <div class="fab-toolbar">
+    <ion-fab class="add-outcome">
+      <ion-fab-button (click)="inputsVisibility = true">
+        <ion-icon name="add"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+  </div>
+  <ion-card class="mt-10 add-outcome-container" *ngIf="inputsVisibility">
+    <ion-card-header>
+      <ion-title>Agregar gasto</ion-title>
+    </ion-card-header>
+    <ion-card-content>
+      <form [formGroup]="newOutcomeForm">
+        <ion-list>
+          <ion-item class="item-expense">
+            <ion-label>Monto</ion-label>
+            <ion-input
+              formControlName="amount"
+              type="number"
+              class="text-right"
+            ></ion-input>
+          </ion-item>
+          <ion-item class="item-expense">
+            <ion-select
+              label="Tipo de gasto"
+              placeholder="Selecciona un tipo de gasto"
+              [value]="null"
+              formControlName="category_id"
+            >
+              <ion-select-option [value]="null">
+                Pendiente de categoría
+              </ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-list>
+        <div class="flex flex-col mt-5">
+          <ion-button class="text-white px-6" type="submit" (click)="confirm()">
+            Confirmar
+          </ion-button>
+          <ion-button fill="translucent" type="button" (click)="cancel()">
+            Cancelar
+          </ion-button>
+        </div>
+      </form>
+    </ion-card-content>
+  </ion-card>
+  <ion-card class="mt-8">
+    <ion-card-header>
+      <ion-title>Movimientos</ion-title>
+    </ion-card-header>
+  </ion-card>
+  <ion-card-content>
+    <ion-list>
+      <ion-item *ngFor="let outcome of outcomes">
+        <ion-icon
+          slot="start"
+          [name]="outcome.category_id ?? 'help'"
+        ></ion-icon>
+        <ion-label> {{ outcome.amount | money }} </ion-label>
+        <ion-note> {{outcome.date | date}} </ion-note>
+      </ion-item>
+    </ion-list>
+  </ion-card-content>
+</ion-content>
